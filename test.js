@@ -8,50 +8,50 @@
 'use strict';
 
 var should = require('should');
-var hasValue = require('./');
+var hasValues = require('./');
 
 function isEmpty(o, isZero) {
-  return !hasValue(o, isZero);
+  return !hasValues(o, isZero);
 }
 
-describe('hasValue', function () {
+describe('hasValues', function () {
   it('should work for nulls', function () {
-    hasValue(null).should.be.false;
-    hasValue(undefined).should.be.false;
+    hasValues(null).should.be.false;
+    hasValues(undefined).should.be.false;
   });
 
   it('should work for booleans', function () {
-    hasValue(true).should.be.true;
-    hasValue(false).should.be.true;
+    hasValues(true).should.be.true;
+    hasValues(false).should.be.true;
   });
 
   it('shold work for strings', function () {
-    hasValue('').should.be.false;
-    hasValue('string').should.be.true;
+    hasValues('').should.be.false;
+    hasValues('string').should.be.true;
   });
 
   it('should work for numbers', function () {
-    hasValue(0).should.be.true;
-    hasValue(1).should.be.true;
+    hasValues(0).should.be.true;
+    hasValues(1).should.be.true;
   });
 
   it('should treat zero as null when `noZero` is set', function () {
-    hasValue(0, true).should.be.false;
+    hasValues(0, true).should.be.false;
   });
 
   it('should work for objects', function () {
-    hasValue({}).should.be.false;
-    hasValue({a: 'b'}).should.be.true;
+    hasValues({}).should.be.false;
+    hasValues({a: 'b'}).should.be.true;
   });
 
   it('should work for arrays', function () {
-    hasValue([]).should.be.false;
-    hasValue(['a', 'b']).should.be.true;
+    hasValues([]).should.be.false;
+    hasValues(['a', 'b']).should.be.true;
   });
 
   it('should work for functions', function () {
-    hasValue(function (foo) {}).should.be.true;
-    hasValue(function () {}).should.be.false;
+    hasValues(function (foo) {}).should.be.true;
+    hasValues(function () {}).should.be.false;
   });
 });
 
