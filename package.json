@@ -1,7 +1,7 @@
 {
   "name": "has-values",
-  "description": "Returns true if a value exists, false if empty. Works for booleans, functions, numbers, strings, nulls, objects and arrays. Other libs do this, but I needed one that would optionally _not_ treat zero as empty. Also, this works with booleans and other values that other libs fail to test properly.",
-  "version": "0.1.1",
+  "description": "Returns true if a value exists, false if empty.",
+  "version": "0.1.2",
   "homepage": "https://github.com/jonschlinkert/has-values",
   "author": {
     "name": "Jon Schlinkert",
