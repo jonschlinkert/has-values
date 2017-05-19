@@ -11,13 +11,13 @@ require('mocha');
 var assert = require('assert');
 var hasValues = require('./');
 
-function isEmpty(o, isZero) {
-  return !hasValues(o, isZero);
+function isEmpty(val) {
+  return !hasValues(val);
 }
 
 describe('hasValues', function() {
   it('should work for nulls', function() {
-    assert(!hasValues(null));
+    assert(hasValues(null));
     assert(!hasValues(undefined));
   });
 
@@ -37,11 +37,15 @@ describe('hasValues', function() {
   });
 
   it('should treat zero as null when `noZero` is set', function() {
-    assert(!hasValues(0, true));
+    assert(hasValues(0));
   });
 
   it('should work for objects', function() {
     assert(!hasValues({}));
+    assert(!hasValues({a: undefined}));
+    assert(hasValues({a: null}));
+    assert(hasValues({a: function() {}}));
+    assert(hasValues({a: function(a, b) {}}));
     assert(hasValues({a: 'b'}));
   });
 
@@ -52,13 +56,13 @@ describe('hasValues', function() {
 
   it('should work for functions', function() {
     assert(hasValues(function(foo) {}));
-    assert(!hasValues(function() {}));
+    assert(hasValues(function() {}));
   });
 });
 
 describe('isEmpty', function() {
   it('should work for nulls', function() {
-    assert(isEmpty(null));
+    assert(!isEmpty(null));
     assert(isEmpty(undefined));
   });
 
@@ -77,8 +81,8 @@ describe('isEmpty', function() {
     assert(!isEmpty(1));
   });
 
-  it('should treat zero as null when `noZero` is set', function() {
-    assert(isEmpty(0, true));
+  it('should treat zero as a value', function() {
+    assert(!isEmpty(0));
   });
 
   it('should work for objects', function() {
@@ -93,6 +97,6 @@ describe('isEmpty', function() {
 
   it('should work for functions', function() {
     assert(!isEmpty(function(foo) {}));
-    assert(isEmpty(function() {}));
+    assert(!isEmpty(function() {}));
   });
 });
