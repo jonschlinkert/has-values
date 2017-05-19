@@ -19,9 +19,13 @@
   "scripts": {
     "test": "mocha"
   },
+  "dependencies": {
+    "is-number": "^3.0.0",
+    "kind-of": "^4.0.0"
+  },
   "devDependencies": {
-    "gulp-format-md": "^0.1.7",
-    "mocha": "^2.4.5"
+    "gulp-format-md": "^0.1.12",
+    "mocha": "^3.4.1"
   },
   "keywords": [
     "array",
