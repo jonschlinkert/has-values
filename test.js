@@ -12,12 +12,27 @@ const assert = require('assert');
 const has = require('./');
 
 describe('has', function() {
-  it('should support null', function() {
-    assert(has(null));
+  it('should support arguments', function() {
+    function foo() {
+      assert(!has(arguments));
+    }
+    function bar() {
+      assert(has(arguments));
+    }
+    foo();
+    bar('abc');
   });
 
-  it('should support undefined', function() {
-    assert(!has(undefined));
+  it('should support arrays', function() {
+    assert(has(['foo', 'bar']));
+    assert(has([{foo: 'bar'}]));
+    assert(has([,,{foo: 'bar'}]));
+
+    assert(!has([]));
+    assert(!has(['']));
+    assert(!has([undefined]));
+    assert(!has([,,,]));
+    assert(!has([{}, {}]));
   });
 
   it('should support booleans', function() {
@@ -29,9 +44,38 @@ describe('has', function() {
     assert(has(new Date()));
   });
 
+  it('should support functions', function() {
+    assert(has(function(foo) {}));
+    assert(has(function() {}));
+    assert(has(function *() {}));
+  });
+
   it('should support Maps', function() {
     assert(!has(new Map()));
     assert(has(new Map([['foo', 'bar']])));
+  });
+
+  it('should support null', function() {
+    assert(has(null));
+  });
+
+  it('should support numbers', function() {
+    assert(has(0));
+    assert(has(1));
+  });
+
+  it('should support objects', function() {
+    assert(has({ foo: 0 }));
+    assert(has({ foo: null }));
+    assert(has({ foo: function() {} }));
+    assert(has({ foo: 'bar' }));
+    assert(has({ foo: ['bar'] }));
+    assert(has({ foo: [{}, 'bar'] }));
+    assert(!has({}));
+    assert(!has({ foo: '' }));
+    assert(!has({ foo: undefined }));
+    assert(!has({ foo: [] }));
+    assert(!has({ foo: [{}] }));
   });
 
   it('should support regex', function() {
@@ -49,29 +93,10 @@ describe('has', function() {
     assert(has('string'));
   });
 
-  it('should support numbers', function() {
-    assert(has(0));
-    assert(has(1));
-  });
-
-  it('should support objects', function() {
-    assert(!has({}));
-    assert(!has({ foo: '' }));
-    assert(!has({ a: undefined }));
-    assert(has({ a: 0 }));
-    assert(has({ a: null }));
-    assert(has({ a: function() {} }));
-    assert(has({ a: function(a, b) {} }));
-    assert(has({ a: 'b' }));
-  });
-
-  it('should support arrays', function() {
-    assert(!has([]));
-    assert(has(['a', 'b']));
-  });
-
-  it('should support functions', function() {
-    assert(has(function(foo) {}));
-    assert(has(function() {}));
+  it('should support undefined', function() {
+    assert(!has());
+    assert(!has(void 0));
+    assert(!has(void 42));
+    assert(!has(undefined));
   });
 });
