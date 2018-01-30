@@ -1,60 +1,49 @@
 /*!
  * has-values <https://github.com/jonschlinkert/has-values>
  *
- * Copyright (c) 2014-2015, 2017, Jon Schlinkert.
+ * Copyright (c) 2014-2018, Jon Schlinkert.
  * Released under the MIT License.
  */
 
 'use strict';
 
-var typeOf = require('kind-of');
-var isNumber = require('is-number');
+const typeOf = require('kind-of');
 
-module.exports = function hasValue(val) {
-  // is-number checks for NaN and other edge cases
-  if (isNumber(val)) {
-    return true;
-  }
-
+module.exports = function has(val) {
   switch (typeOf(val)) {
-    case 'null':
     case 'boolean':
+    case 'date':
     case 'function':
+    case 'null':
+    case 'number':
       return true;
+    case 'undefined':
+      return false;
+    case 'regexp':
+      return val.source !== '(?:)' && val.source !== '';
+    case 'buffer':
+      return val.toString() !== '';
+    case 'error':
+      return val.message !== '';
     case 'string':
     case 'arguments':
       return val.length !== 0;
-    case 'error':
-      return val.message !== '';
-    case 'array':
-      var len = val.length;
-      if (len === 0) {
-        return false;
-      }
-      for (var i = 0; i < len; i++) {
-        if (hasValue(val[i])) {
-          return true;
-        }
-      }
-      return false;
     case 'file':
     case 'map':
     case 'set':
       return val.size !== 0;
+    case 'array':
     case 'object':
-      var keys = Object.keys(val);
-      if (keys.length === 0) {
-        return false;
-      }
-      for (var i = 0; i < keys.length; i++) {
-        var key = keys[i];
-        if (hasValue(val[key])) {
+      for (const key of Object.keys(val)) {
+        if (has(val[key])) {
           return true;
         }
       }
       return false;
+
+    // everything else
     default: {
-      return false;
+      return true;
     }
   }
 };
