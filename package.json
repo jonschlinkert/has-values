@@ -1,7 +1,7 @@
 {
   "name": "has-values",
   "description": "Returns true if any values exist, false if empty. Works for booleans, functions, numbers, strings, nulls, objects and arrays. ",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "https://github.com/jonschlinkert/has-values",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/has-values",
