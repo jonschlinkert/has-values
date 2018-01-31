@@ -21,7 +21,7 @@ const has = require('has-values');
 Create an `isEmpty` function by returning the inverse of the result from has-values:
 
 ```js
-const isEmpty = (val, allowZero) => !has(val, allowZero);
+const isEmpty = val => !has(val);
 ```
 
 ## Supported types
@@ -31,7 +31,6 @@ const isEmpty = (val, allowZero) => !has(val, allowZero);
 ```js
 console.log(has(['a']));      //=> true
 console.log(has([0]));        //=> true
-console.log(has([0], false)); //=> false
 console.log(has([[[]]]));     //=> false
 console.log(has([[], []]));   //=> false
 console.log(has([]));         //=> false
